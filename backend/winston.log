@@ -36,3 +36,7 @@
 {"message":"Successfully connected to the database","level":"info","service":"user-service","timestamp":"2021-04-04T23:55:03.043Z"}
 {"message":"Successfully connected to the database","level":"info","service":"user-service","timestamp":"2021-04-04T23:55:06.629Z"}
 {"message":"Successfully connected to the database","level":"info","service":"user-service","timestamp":"2021-04-05T08:26:45.551Z"}
+{"message":"Successfully connected to the database","level":"info","service":"user-service","timestamp":"2021-04-05T14:39:18.850Z"}
+{"message":"Successfully connected to the database","level":"info","service":"user-service","timestamp":"2021-04-05T14:50:58.430Z"}
+{"message":"Successfully connected to the database","level":"info","service":"user-service","timestamp":"2021-04-05T21:26:41.365Z"}
+{"message":"Successfully connected to the database","level":"info","service":"user-service","timestamp":"2021-04-05T21:30:36.672Z"}

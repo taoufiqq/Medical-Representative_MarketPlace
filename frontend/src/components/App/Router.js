@@ -12,14 +12,15 @@ import LoginSeller from '../Seller/LoginSeller'
 import DashboardAdmin from '../Admin/DashboardAdmin'
 import DashboardSeller from '../Seller/DashboardSeller'
 import AddProduct from '../Seller/AddProduct'
+import ListProducts from '../Seller/ListProducts'
 import EditAdmin from '../SuperAdmin/EditAdmin'
 import SignIn from '../Seller/Sign_in'
 import Seller from '../SuperAdmin/Seller'
 import ConfirmSeller from '../SuperAdmin/ConfirmSeller'
-import Home from '../Home/products'
+import Home from '../Home/Home'
 import Compte from '../Home/Compte'
 import ChoiceLogin from '../Home/ChoiceLogin'
-
+import DetailsProduct from '../Home/DetailsProduct'
 
 
 function Routes () { 
@@ -37,8 +38,10 @@ function Routes () {
             <PrivateRoute  path="/sellerDashboard" exact component={DashboardSeller} />
             <PrivateRoute  path="/seller" exact component={Seller} />
             <PrivateRoute  path="/addProduct" exact component={AddProduct} />
+            <PrivateRoute  path="/listProduct" exact component={ListProducts} />
             <PrivateRoute  path="/admin" exact component={Admin} />
             <PrivateRoute  path="/confirmSeller" exact component={ConfirmSeller} />
+            <PrivateRoute  path="/detailsProduct" exact component={DetailsProduct} />
             <Route path="/" exact component={Home} />
             <Route path="/compte" exact component={Compte} />
             <Route path="/choiceLogin" exact component={ChoiceLogin} />

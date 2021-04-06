@@ -13,7 +13,13 @@ const Compte =()=> {
         <Link className="rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg font-bold hover:text-white mt-4 hover:bg-green-700 lg:mt-0" style={{marginLeft:220}}>
              Client
         </Link>
-    </div>
+        </div>
+        <Link to='/choiceLogin' className="rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg font-bold hover:text-white mt-4 hover:bg-green-700 lg:mt-0" style={{marginLeft:824,width:220}} >
+                  I already have an account
+        </Link>
+  
+    
+
 
 </div>
     //     <div className="bg-gradient-to-tl from-blue-800 to-blue-500 text-white font-mono flex flex-col min-h-screen">

@@ -31,7 +31,7 @@ useEffect(()=>{
 });
 
 },[])
-// -----------------------update question---------------------------
+// -----------------------update Seller---------------------------
 const handleSubmit = (e) => {
   e.preventDefault();
 var id = idSeller.value;
@@ -50,10 +50,6 @@ axios.put(`http://localhost:3030/superAdmin/updateSeller/${id_seller}`,data)
 })
 
 }
-
-
-
-
 
     return (
         <div className="font-sans">

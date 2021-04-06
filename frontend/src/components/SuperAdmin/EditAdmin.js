@@ -50,27 +50,6 @@ axios.put(`http://localhost:3030/superAdmin/updateAdmin/${id_admin}`,data)
   })
 
 }
-	// const handleSubmit = (e) => {
-	// 	e.preventDefault();
-
-
-  
-
-    // const Admin = {firstName,lastName,email,login,password};
-
-	// axios.post(`http://localhost:3030/superAdmin/addAdmin`,Admin)
-          
-	// 	.then(res => {
-	// 	    if(res.error){
-	// 			return false
-	// 		}else{
-    //     console.log(res.data);
-    //      history.push('/superAdmin')
-	// 		}
-		 
-	// 	})
-	// }
-
 return (
 <div className="font-sans">
   <div className="relative min-h-screen flex flex-col sm:justify-center items-center bg-gradient-to-r from-green-400 to-blue-500 ">

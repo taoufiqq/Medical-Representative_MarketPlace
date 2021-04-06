@@ -6,63 +6,23 @@ import axios from 'axios';
 const DashbordSeller = () => {
  
   const history = useHistory();
-//   const [admins, setAdmins] = useState();
-//   const [adminsLength, setAdminsLength] = useState();
-//   const [superAdmin, setSuperAdmin] = useState();
-//   const [sellers, setSellers] = useState();
-
-// get all admin and show it in table
-
-//   useEffect(()=>{
-
-//     axios.get(`http://localhost:3030/superAdmin/getAllAdmins`)
-//       .then(function (response) {
-          
-//         setAdmins(response.data)
-//         setAdminsLength(response.data.length)
-//       }).catch(function (err) {
-//         console.log(err);
-//     });
-    
-//     })
-
+  const [product, setProduct] = useState();
 
 // get all sellers 
 
-// useEffect(()=>{
+useEffect(()=>{
 
-//   axios.get(`http://localhost:3030/superAdmin/getAllSellers`)
-//     .then(function (response) {
+  axios.get(`http://localhost:3030/Seller/getAllProduct`)
+    .then(function (response) {
         
-//       setSellers(response.data.length)
+      setProduct(response.data.length)
     
-//     }).catch(function (err) {
-//       console.log(err);
-//   });
+    }).catch(function (err) {
+      console.log(err);
+  });
   
-//   })
+  })
 
-// get all Super admin 
-
-// useEffect(()=>{
-
-//   axios.get(`http://localhost:3030/superAdmin/getAllsuperAdmins`)
-//     .then(function (response) {
-        
-//       setSuperAdmin(response.data)
-    
-//     }).catch(function (err) {
-//       console.log(err);
-//   });
-  
-//   })
-
-    // const getIdAdmin = (id)=>{
-    //   localStorage.setItem('idAdmin',id);
-    //   history.push('/editAdmin');
-    
-    // }
-      
 
 const logOut =()=>{
 
@@ -75,9 +35,9 @@ const logOut =()=>{
     return (
         <div>
         <style dangerouslySetInnerHTML={{__html: "\n      /* Add this shadow in tailwind.config.js */\n      .neumorphism-shadow {\n        box-shadow: -4px -4px 10px rgb(255, 255, 255), 4px 4px 10px rgba(0, 0, 0, 0.219);\n      }\n      /* Rotate chevron in collapsing */\n      [data-bs-toggle='collapse'][aria-expanded='true'] span:nth-child(3) svg {\n        transform: rotate(-90deg);\n      }\n\n      /* For bootstrap collapse plugin */\n      .fade {\n        transition: opacity 0.15s linear;\n      }\n      .fade:not(.show) {\n        opacity: 0;\n      }\n      .collapse:not(.show) {\n        display: none;\n      }\n      .collapsing {\n        height: 0;\n        overflow: hidden;\n        transition: height 0.35s ease;\n      }\n      @media (prefers-reduced-motion: reduce) {\n        .collapsing {\n          transition: none;\n        }\n        .fade {\n          transition: none;\n        }\n      }\n      /* fixed github link. this stuff also should be applied throw config file  */\n      .github-link:hover {\n        box-shadow: inset -4px -4px 10px rgb(255, 255, 255), inset 4px 4px 10px rgba(0, 0, 0, 0.219);\n      }\n      .github-link:hover > svg,\n      .github-link:focus > svg {\n        transform: scale(.95)\n      }\n\n/* TODO: CHANGE SCROLLBAR STYLE */\n    " }} />
-        <div className="flex h-screen antialiased text-black bg-gradient-to-r from-purple-300 to-blue-500">
+        <div className="flex h-screen antialiased text-black bg-gray-400 ">
                 {/* <img className="w-12 h-12 p-px -mt-8 rounded-full neumorphism-shadow" src=""/> */}
-          <aside className="flex-shrink-0 p-4 w-72 h-full">
+          <aside className="flex-shrink-0 p-4 w-72 h-full bg-white">
             <div className="flex flex-col h-full pt-12 pb-4 rounded-lg neumorphism-shadow">
               {/* Sidebar header */}
   
@@ -105,7 +65,7 @@ const logOut =()=>{
              
                   </li>
                   <li>
-                    <Link to='/admin' className="flex items-center px-4 py-2 text-gray-600 transition-transform transform rounded-md hover:translate-x-1 focus:ring focus:outline-none">
+                    <Link className="flex items-center px-4 py-2 text-gray-600 transition-transform transform rounded-md hover:translate-x-1 focus:ring focus:outline-none">
                       <span>
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
@@ -117,13 +77,14 @@ const logOut =()=>{
                   </li>
                   {/* Profile link */}
                   <li>
-                    <Link to='/seller' className="flex items-center px-4 py-2 text-gray-600 transition-transform transform rounded-md hover:translate-x-1 focus:ring focus:outline-none">
+                    <Link to='/listProduct' className="flex items-center px-4 py-2 text-gray-600 transition-transform transform rounded-md hover:translate-x-1 focus:ring focus:outline-none">
                       <span>
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
-                         </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                           <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                           <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                       </svg>
                       </span>
-                      <span className="ml-2 font-medium">Add Product</span>
+                      <span className="ml-2 font-medium">List Products</span>
                     </Link>
                   </li>
                 </ul>
@@ -140,7 +101,7 @@ const logOut =()=>{
   <div className="container px-5 py-24 mx-auto">
     <div className="flex flex-col text-center w-full mb-20">
 
-      <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them man bun deep jianbing selfies heirloom prism food truck ugh squid celiac humblebrag.</p>
+      <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-400">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them man bun deep jianbing selfies heirloom prism food truck ugh squid celiac humblebrag.</p>
     </div>
     <div className="flex flex-wrap -m-4 text-center">
      
@@ -151,7 +112,7 @@ const logOut =()=>{
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
 
           </svg>
-          <h2 className="title-font font-medium text-3xl text-gray-900">1.2K</h2>
+          <h2 className="title-font font-medium text-3xl text-gray-900">{product}</h2>
           <p className="leading-relaxed">Products</p>
         </div>
       </div>

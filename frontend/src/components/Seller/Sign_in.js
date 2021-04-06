@@ -74,7 +74,7 @@ return (
             onChange={e => setPassword(e.target.value)} />                           
           </div>
           <div className="mt-7">                
-            <input type="file" placeholder="document" className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"  required 
+            <input type="text" placeholder="document" className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"  required 
             value={document }
             onChange={e => setDocument(e.target.value)} />                           
           </div>

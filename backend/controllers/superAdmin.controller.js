@@ -207,12 +207,7 @@ const getAdminById = (req, res) => {
       };
       
       
-// // ______________________get Admin by id__________________
-// const getAdminBy('/Admin/:id', (req, res) => {
-//         Admin.findById(req.params.id)
-//           .then((admin) => res.json(admin))
-//           .catch((err) => res.status(400).json("Error :" + err));
-//       });
+
 
 //______________________get all Seller_____________________ 
 const getAllSeller = (req, res) => {

@@ -8,14 +8,58 @@ const DetailsProduct=()=> {
 
     const history = useHistory();
     const [product, setProduct] = useState();
-    
+    const [price, setprice] = useState();
     const idPdts=localStorage.getItem('idProduct');
+
+
   
+
+
+
+
   // get all admin and show it in table
   
   useEffect(()=>{
   
     axios.get(`http://localhost:3030/Seller/getProductById/${idPdts}`)
+      .then(function (response) {
+          
+        setProduct(response.data)
+        setprice(response.data.price)
+        console.log(product);
+      
+      }).catch(function (err) {
+        console.log(err);
+    });
+    
+    },[idPdts])
+
+
+// -------------------Parite Exchange currency-------------------
+
+    const [ToCurrency, setToCurrency] = useState('MAD');
+
+
+    let currency = ToCurrency && ToCurrency;
+
+    const [exchangeRate, setExchangeRate] = useState();
+
+    useEffect(async()=>{
+
+
+      fetch('http://data.fixer.io/api/latest?access_key=afe4bd8abcfd1a927150d247ad43ac84')
+      .then(currencyRes => currencyRes.json())
+      .then(data => {
+      
+
+        setExchangeRate(data.rates[currency]);
+
+        
+        console.log(data.rates[currency]);
+        
+      });
+    
+      axios.get(`http://localhost:3030/Seller/getProductById/${idPdts}`)
       .then(function (response) {
           
         setProduct(response.data)
@@ -25,36 +69,11 @@ const DetailsProduct=()=> {
         console.log(err);
     });
     
-    })
+    
+      },[currency])
 
 
-    var i = 0;
-    function addProduct() {
-        i++;
-        document.getElementById('input').value = i;
-    }
-        function removeProduct() {
-        i--;
-        document.getElementById('input').value = i;
-    }
-    // var i = 0;
-    // function addone() {
-    //     i++;
-    //     document.getElementById('inc').value = i;
-    //     var x = document.getElementById("inc").value;
-
-    //     document.getElementById("inc").innerHTML = x;
-    // }
-  //   function removeone() {
-  //     i--;
-  //     document.getElementById('inc').value = i;
-  //     var x = document.getElementById("inc").value;
-  //     var y = document.getElementById("price").textContent;
-
-
-  //     var pricefinelmoin = y - y +"MAD";
-  //     document.getElementById("test").innerHTML = pricefinelmoin;
-  // }
+  
 
     return (
       
@@ -68,20 +87,23 @@ const DetailsProduct=()=> {
  
       <p className="mb-8 leading-relaxed w-30">{product && product.description}</p>
       <div className="flex items-center pb-5 border-b-2 border-gray-100 mb-5">
+      <div className="custom-number-input h-10 w-92">
 
-       
 
-           <button  onClick={() => removeProduct()}>+</button>
-            <input className="mx-2 border text-center w-8" type="text" id="input" value="1" defaultValue={1} />
-            <button onClick={() => addProduct()} >-</button>
-
+          </div>
+          <span className="ml-9 title-font  text-2xl text-red-900">Choose the currency </span>
+          <select onChange={(e)=>setToCurrency(e.target.value)} className="pl-3 inline-block no-underline  hover:text-black" name="" id="">
+                        <option  value='MAD'>MAD</option>
+                        <option  value='EUR'>EUR</option>
+                        <option  value='USD'>USD</option>
+          </select>
           </div>
            
       <div className="flex justify-center">
          
-            <span className="ml-6 title-font font-medium text-2xl text-gray-900" id="price" >{product && product.price} DH</span>
-            <br/>
-            <span className="ml-6 title-font font-medium text-2xl text-gray-900" id="test" >{product && product.price} DH</span>
+
+      <span className="title-font font-medium text-2xl text-gray-900">{product && (product.price * exchangeRate).toFixed(0) } {currency}</span>
+   
         <button className="ml-6 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Buy now</button>
      
       </div>

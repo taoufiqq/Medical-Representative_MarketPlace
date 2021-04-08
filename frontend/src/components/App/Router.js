@@ -91,7 +91,7 @@ function Routes () {
 
             <Route path="/signInCustomer" exact component={SignInCustomer} />
             <Route path="/loginCustomer" exact component={LoginCustomer} />            
-            <PrivateRouteCustomer path="/Customer/activateCompte/:token" exact component={ValidateAccount} /> 
+            <Route path="/Customer/activateCompte/:token" exact component={ValidateAccount} /> 
             <PrivateRouteCustomer path="/acceuil" exact component={AcceuilCustomer} />   
 
         </Switch>

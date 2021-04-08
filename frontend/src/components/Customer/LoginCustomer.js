@@ -26,8 +26,8 @@ const LoginCustomer=()=> {
              let verified= res.data.verified;
 
              localStorage.setItem("verified", verified);
-        if(verified === false){
-             toastr.error('Please Verifier You Accout First by Click on URL In Your Emil Box')
+        if(verified === "InActive"){
+             toastr.error('Please Verifier You Accout First by Click on URL In Your Email Box')
         }else{
              let token= res.data.token;
              let role= res.data.role;

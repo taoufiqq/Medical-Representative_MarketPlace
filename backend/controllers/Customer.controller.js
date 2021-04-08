@@ -99,7 +99,7 @@ const loginCustomer = (req, res) => {
 
               if(Customer.verified == false){
                 res.json({
-                  Verified: 'InActive'
+                  verified: 'InActive'
                   })
             }if(Customer.role != "Customer"){
               res.json({

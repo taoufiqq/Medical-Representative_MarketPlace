@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 
 const Seller = require('../models/Seller.model');
 const Product = require('../models/Product.model');
+const date = new Date();
 
 const addSeller = (req, res) => {
     //10==saltRounds
@@ -17,7 +18,7 @@ const addSeller = (req, res) => {
         const email = req.body.email;
         const login = req.body.login;
         const password = hashPassword;
-        const document  = req.body.document ;       
+     
         const status = "InActive";
         const type = "Starter";
         // const docummant = {
@@ -30,7 +31,7 @@ const addSeller = (req, res) => {
             email,
             login,
             password,
-            document ,          
+             
             status,
             type,
             
@@ -121,7 +122,7 @@ const addProduct = (req,res) =>{
  const category= req.body.category;
  const quantity= req.body.quantity;  
  const idSeller= req.body.idSeller;
- const currentDate= req.body.currentDate;
+ const currentDate= date;
  const status = req.body.status;
 
  const productPush = new Product({
@@ -214,6 +215,32 @@ const getProductById = (req, res) => {
           });
       });
 };
+ //-------------------------logout Seller and remove token-----------------------------   
+ const logout = (req, res) => {
+  const deconnect = res.clearCookie("token")
+
+  res.json({
+      message: 'User is Signout !!'
+  })
+}
+
+//________________________Get Product By NameSeller ____________________
+const getProductBySellername = (req, res) => {
+  Product.find({
+    idSeller: req.params.idSeller
+    })
+    .then(Product => {
+      res.send(Product);
+    }).catch(err => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving question."
+      });
+    });
+};
+
+
+
+
 module.exports={
-    addSeller,loginSeller,addProduct,getAllProduct,deleteProduct,updateProduct,getProductById
+    addSeller,loginSeller,addProduct,getAllProduct,deleteProduct,updateProduct,getProductById,logout,getProductBySellername
 };

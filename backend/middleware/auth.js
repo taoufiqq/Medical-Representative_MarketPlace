@@ -18,6 +18,39 @@ function verifyToken(req, res, next) {
       message : 'you are note allowed to ....'
     })
   }
+  exports.isSuperAdmin = (req, res, next) => {
+    if(req.auth.role == 0){
+        return res.status(403).json({
+            error: "Super Admin Ressource, Access Denied"
+        })
+    }else if(req.auth.role == "SuperAdmin"){
+      return next()
+    }
+
+
 }
+
+exports.isAdmin = (req, res, next) => {
+    if(req.auth.role == 0){
+        return res.status(403).json({
+            error: "Admin Ressource, Access Denied"
+        })
+    }else if(req.auth.role == "Admin"){
+      return next()
+    }
+}
+
+exports.isSELLER = (req, res, next) => {
+    if(req.auth.role == 0){
+        return res.status(403).json({
+            error: "SELLER Ressource, Access Denied"
+        })
+    }else if(req.auth.role == "Seller"){
+      return next()
+    }
+}
+
+}
+
 
 module.exports = verifyToken;

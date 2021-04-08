@@ -7,6 +7,7 @@ const ConfirmSeller = () => {
  
   const history = useHistory();
   const [sellers, setSellers] = useState();
+  const SuperAdmin=localStorage.getItem('SuperAdmin');
 
 // get all sellers 
 
@@ -55,12 +56,17 @@ const logOut =()=>{
         <style dangerouslySetInnerHTML={{__html: "\n      /* Add this shadow in tailwind.config.js */\n      .neumorphism-shadow {\n        box-shadow: -4px -4px 10px rgb(255, 255, 255), 4px 4px 10px rgba(0, 0, 0, 0.219);\n      }\n      /* Rotate chevron in collapsing */\n      [data-bs-toggle='collapse'][aria-expanded='true'] span:nth-child(3) svg {\n        transform: rotate(-90deg);\n      }\n\n      /* For bootstrap collapse plugin */\n      .fade {\n        transition: opacity 0.15s linear;\n      }\n      .fade:not(.show) {\n        opacity: 0;\n      }\n      .collapse:not(.show) {\n        display: none;\n      }\n      .collapsing {\n        height: 0;\n        overflow: hidden;\n        transition: height 0.35s ease;\n      }\n      @media (prefers-reduced-motion: reduce) {\n        .collapsing {\n          transition: none;\n        }\n        .fade {\n          transition: none;\n        }\n      }\n      /* fixed github link. this stuff also should be applied throw config file  */\n      .github-link:hover {\n        box-shadow: inset -4px -4px 10px rgb(255, 255, 255), inset 4px 4px 10px rgba(0, 0, 0, 0.219);\n      }\n      .github-link:hover > svg,\n      .github-link:focus > svg {\n        transform: scale(.95)\n      }\n\n/* TODO: CHANGE SCROLLBAR STYLE */\n    " }} />
         <div className="flex h-screen antialiased text-black bg-gradient-to-r from-purple-300 to-blue-500">
           <aside className="flex-shrink-0 p-4 w-72 h-full">
-            <div className="flex flex-col h-full pt-12 pb-4 rounded-lg neumorphism-shadow">
+            <div className="flex flex-col h-full pt-12 pb-4 rounded-lg neumorphism-shadow bg-white">
               {/* Sidebar header */}
-              <div className="flex flex-col items-center justify-center flex-shrink-0 px-4 py-2 mx-4 rounded-lg neumorphism-shadow">
+ 
+              <div className="flex flex-col items-center justify-center flex-shrink-0 px-4 py-2 mx-4 rounded-lg neumorphism-shadow bg-blue-300">
+      
                 {/* <img className="w-12 h-12 p-px -mt-8 rounded-full neumorphism-shadow" src=""/> */}
+                <span href="" target="_blank" className="mt-3 px-4 py-1 rounded-md text-xl font-semibold tracking-wider text-gray-600  focus:outline-none">{SuperAdmin}</span>
                 <span href="" target="_blank" className="mt-3 px-4 py-1 rounded-md text-xl font-semibold tracking-wider text-gray-600  focus:outline-none">Super Admin</span>
+
               </div>
+       
               {/* Sidebar links */}
               <nav className="flex-1 max-h-full p-4 mt-6 overflow-y-hidden">
                 <ul className="max-h-full p-2 space-y-1 overflow-y-auto divide-y divide-blue-300 neumorphism-shadow">
@@ -124,7 +130,6 @@ const logOut =()=>{
               <th className="py-3 px-6 text-left">Last name</th>
               <th className="py-3 px-6 text-center">Email</th>
               <th className="py-3 px-6 text-center">Login</th>
-              <th className="py-3 px-6 text-center">Document</th>
               <th className="py-3 px-6 text-center">Type</th>
               <th className="py-3 px-6 text-center">Status</th>
               <th className="py-3 px-6 text-center">Actions</th>
@@ -147,9 +152,6 @@ const logOut =()=>{
               </td>
               <td className="py-3 px-6 text-center">
               {item.login}
-              </td>
-              <td className="py-3 px-6 text-center">
-              {item.documant}
               </td>
               <td className="py-3 px-6 text-center">
               {item.type}

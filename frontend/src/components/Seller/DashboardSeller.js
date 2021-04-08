@@ -7,7 +7,7 @@ const DashbordSeller = () => {
  
   const history = useHistory();
   const [product, setProduct] = useState();
-
+  const nameSeller=localStorage.getItem('IdSeller');
 // get all sellers 
 
 useEffect(()=>{
@@ -31,19 +31,33 @@ const logOut =()=>{
     }
 
 
+    const [listProductsLength, setlistProductsLength] = useState();
+        
+    const IdSeller=localStorage.getItem('IdSeller');
+    axios.get(`http://localhost:3030/Seller/getProductBySellername/${IdSeller}`)
+    .then(function (response) {
+        
+      setlistProductsLength(response.data.length)
+    }).catch(function (err) {
+      console.log(err);
+  });
+
+
+
+
 
     return (
         <div>
         <style dangerouslySetInnerHTML={{__html: "\n      /* Add this shadow in tailwind.config.js */\n      .neumorphism-shadow {\n        box-shadow: -4px -4px 10px rgb(255, 255, 255), 4px 4px 10px rgba(0, 0, 0, 0.219);\n      }\n      /* Rotate chevron in collapsing */\n      [data-bs-toggle='collapse'][aria-expanded='true'] span:nth-child(3) svg {\n        transform: rotate(-90deg);\n      }\n\n      /* For bootstrap collapse plugin */\n      .fade {\n        transition: opacity 0.15s linear;\n      }\n      .fade:not(.show) {\n        opacity: 0;\n      }\n      .collapse:not(.show) {\n        display: none;\n      }\n      .collapsing {\n        height: 0;\n        overflow: hidden;\n        transition: height 0.35s ease;\n      }\n      @media (prefers-reduced-motion: reduce) {\n        .collapsing {\n          transition: none;\n        }\n        .fade {\n          transition: none;\n        }\n      }\n      /* fixed github link. this stuff also should be applied throw config file  */\n      .github-link:hover {\n        box-shadow: inset -4px -4px 10px rgb(255, 255, 255), inset 4px 4px 10px rgba(0, 0, 0, 0.219);\n      }\n      .github-link:hover > svg,\n      .github-link:focus > svg {\n        transform: scale(.95)\n      }\n\n/* TODO: CHANGE SCROLLBAR STYLE */\n    " }} />
         <div className="flex h-screen antialiased text-black bg-gray-400 ">
                 {/* <img className="w-12 h-12 p-px -mt-8 rounded-full neumorphism-shadow" src=""/> */}
-          <aside className="flex-shrink-0 p-4 w-72 h-full bg-white">
-            <div className="flex flex-col h-full pt-12 pb-4 rounded-lg neumorphism-shadow">
+          <aside className="flex-shrink-0 p-4 w-72 h-full">
+            <div className="flex flex-col h-full pt-12 pb-4 rounded-lg neumorphism-shadow bg-white">
               {/* Sidebar header */}
   
               <div className="flex flex-col items-center justify-center flex-shrink-0 px-4 py-2 mx-4 rounded-lg neumorphism-shadow bg-blue-300">
               
-                <span href="" target="_blank" className="mt-3 px-4 py-1 rounded-md text-xl font-semibold tracking-wider text-gray-600  focus:outline-none">Seller</span>
+                <span href="" target="_blank" className="mt-3 px-4 py-1 rounded-md text-xl font-semibold tracking-wider text-gray-600  focus:outline-none">{nameSeller}</span>
               </div>
        
               {/* Sidebar links */}
@@ -65,7 +79,7 @@ const logOut =()=>{
              
                   </li>
                   <li>
-                    <Link className="flex items-center px-4 py-2 text-gray-600 transition-transform transform rounded-md hover:translate-x-1 focus:ring focus:outline-none">
+                    <Link to='buyPack' className="flex items-center px-4 py-2 text-gray-600 transition-transform transform rounded-md hover:translate-x-1 focus:ring focus:outline-none">
                       <span>
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
@@ -107,17 +121,23 @@ const logOut =()=>{
      
       <div className="p-4 md:w-4/4 sm:w-1/2 w-full">
         <div className="border-2 border-gray-200 px-4 py-6 rounded-lg">
-          <svg fill="none" stroke="currentColor"  strokeWidth={2} className="text-indigo-500 w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
-          
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-
+          <svg fill="none" stroke="currentColor"  strokeWidth={2} className="text-indigo-500 w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">         
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
           </svg>
-          <h2 className="title-font font-medium text-3xl text-gray-900">{product}</h2>
+          <h2 className="title-font font-medium text-3xl text-gray-900">{listProductsLength}</h2>
           <p className="leading-relaxed">Products</p>
         </div>
       </div>
    
-    
+      <div className="p-4 md:w-4/4 sm:w-1/2 w-full">
+        <div className="border-2 border-gray-200 px-4 py-6 rounded-lg">
+           <svg fill="none" stroke="currentColor"  strokeWidth={2} className="text-indigo-500 w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+           </svg>
+          <h2 className="title-font font-medium text-3xl text-gray-900">3K DH</h2>
+          <p className="leading-relaxed">Total Gains</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>

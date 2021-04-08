@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { Link,useHistory } from 'react-router-dom';
 import axios from 'axios';
+import toastr from 'toastr';
+import "toastr/build/toastr.css";
 
 const  AddProduct = () => {
 
@@ -12,11 +14,14 @@ const  AddProduct = () => {
     const [productImg, setProductImg] = useState("");
     const [category, setCategory] = useState("");
     const [quantity, setQuantity] = useState("");
-    const [idSeller, setIdSeller] = useState("");
-    const [currentDate, setCurrentDate] = useState("");
+    // const [currentDate, setCurrentDate] = useState("");
     const [status, setStatus] = useState("");
 
+
+        
+    const IdSeller=localStorage.getItem('IdSeller');
 //---------add Product------------- 
+
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -24,7 +29,7 @@ const  AddProduct = () => {
 
   
 
-    const Product = {titel,description,price,productImg,category,quantity,idSeller,currentDate,status};
+    const Product = {titel,description,price,productImg,category,quantity, idSeller:IdSeller,status};
 
 	axios.post(`http://localhost:3030/Seller/addProduct`,Product)
           
@@ -38,6 +43,7 @@ const  AddProduct = () => {
 		 
 		})
 	}
+   
 
 return (
 <div className="font-sans">
@@ -46,9 +52,10 @@ return (
       <div className="card bg-blue-400 shadow-lg  w-full h-full rounded-3xl absolute  transform -rotate-6" />
       <div className="card bg-green-400 shadow-lg  w-full h-full rounded-3xl absolute  transform rotate-6" />
       <div className="relative w-full rounded-3xl  px-6 py-4 bg-gray-100 shadow-md">
-        <label htmlFor className="block text-sm text-gray-700 text-center font-bold">
+ <label htmlFor className="block text-sm text-gray-700 text-center font-bold">
           Add Product
         </label>
+ 
         <form method="#" action="#" className="mt-10" onSubmit={handleSubmit}>
           <div className="mt-7">
             <input type="text" placeholder="Titel" className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"  required 
@@ -81,16 +88,6 @@ return (
             <input type="text" placeholder="Quantity" className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"  required 
             value={quantity}
             onChange={e => setQuantity(e.target.value)} />                           
-          </div>
-          <div className="mt-7">
-            <input type="text" placeholder="Id Seller" className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"  required 
-            value={idSeller}
-            onChange={e => setIdSeller(e.target.value)}/>
-          </div>
-          <div className="mt-7">
-            <input type="date" placeholder="" className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"  required 
-            value={currentDate}
-            onChange={e => setCurrentDate(e.target.value)}/>
           </div>
           <div className="mt-7">
             <input type="text" placeholder="Status" className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"  required 

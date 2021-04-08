@@ -25,7 +25,7 @@ const  Login = () => {
 			 let token= res.data.token;
 
 			 localStorage.setItem("token", token);
-
+       localStorage.setItem('SuperAdmin',login);
 			 history.push('/superAdmin');
 
 			 toastr.info('Super Admin authenticated SuccessFully', `Welcome ${superAdmin.login}`, {

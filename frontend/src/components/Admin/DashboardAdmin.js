@@ -6,7 +6,7 @@ const DashbordAdmin = () => {
 
     const history = useHistory();
 
-
+    const nameAdmin=localStorage.getItem('IdAdmin');
 
     const logOut =()=>{
 
@@ -18,15 +18,15 @@ const DashbordAdmin = () => {
     
       <div>
       <style dangerouslySetInnerHTML={{__html: "\n      /* Add this shadow in tailwind.config.js */\n      .neumorphism-shadow {\n        box-shadow: -4px -4px 10px rgb(255, 255, 255), 4px 4px 10px rgba(0, 0, 0, 0.219);\n      }\n      /* Rotate chevron in collapsing */\n      [data-bs-toggle='collapse'][aria-expanded='true'] span:nth-child(3) svg {\n        transform: rotate(-90deg);\n      }\n\n      /* For bootstrap collapse plugin */\n      .fade {\n        transition: opacity 0.15s linear;\n      }\n      .fade:not(.show) {\n        opacity: 0;\n      }\n      .collapse:not(.show) {\n        display: none;\n      }\n      .collapsing {\n        height: 0;\n        overflow: hidden;\n        transition: height 0.35s ease;\n      }\n      @media (prefers-reduced-motion: reduce) {\n        .collapsing {\n          transition: none;\n        }\n        .fade {\n          transition: none;\n        }\n      }\n      /* fixed github link. this stuff also should be applied throw config file  */\n      .github-link:hover {\n        box-shadow: inset -4px -4px 10px rgb(255, 255, 255), inset 4px 4px 10px rgba(0, 0, 0, 0.219);\n      }\n      .github-link:hover > svg,\n      .github-link:focus > svg {\n        transform: scale(.95)\n      }\n\n/* TODO: CHANGE SCROLLBAR STYLE */\n    " }} />
-      <div className="flex h-screen antialiased text-black bg-gradient-to-r from-purple-300 to-blue-500">
+      <div className="flex h-screen antialiased text-black bg-gray-300">
               {/* <img className="w-12 h-12 p-px -mt-8 rounded-full neumorphism-shadow" src=""/> */}
-        <aside className="flex-shrink-0 p-4 w-72 h-full">
-          <div className="flex flex-col h-full pt-12 pb-4 rounded-lg neumorphism-shadow">
+        <aside className="flex-shrink-0 p-4 w-72 h-full ">
+          <div className="flex flex-col h-full pt-12 pb-4 rounded-lg neumorphism-shadow bg-white">
             {/* Sidebar header */}
 
             <div className="flex flex-col items-center justify-center flex-shrink-0 px-4 py-2 mx-4 rounded-lg neumorphism-shadow bg-blue-300">
             
-              <span href="" target="_blank" className="mt-3 px-4 py-1 rounded-md text-xl font-semibold tracking-wider text-gray-600  focus:outline-none">Admin</span>
+              <span href="" target="_blank" className="mt-3 px-4 py-1 rounded-md text-xl font-semibold tracking-wider text-gray-600  focus:outline-none">{nameAdmin}</span>
             </div>
      
             {/* Sidebar links */}
@@ -48,7 +48,7 @@ const DashbordAdmin = () => {
            
                 </li>
                 <li>
-                  <Link to='/admin' className="flex items-center px-4 py-2 text-gray-600 transition-transform transform rounded-md hover:translate-x-1 focus:ring focus:outline-none">
+                  <Link to='/listOrder' className="flex items-center px-4 py-2 text-gray-600 transition-transform transform rounded-md hover:translate-x-1 focus:ring focus:outline-none">
                     <span>
                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
@@ -61,13 +61,13 @@ const DashbordAdmin = () => {
                 </li>
                 {/* Profile link */}
                 <li>
-                    <Link to='/seller' className="flex items-center px-4 py-2 text-gray-600 transition-transform transform rounded-md hover:translate-x-1 focus:ring focus:outline-none">
+                <Link to='/deliveryMan'  className="flex items-center px-4 py-2 text-gray-600 transition-transform transform rounded-md hover:translate-x-1 focus:ring focus:outline-none">
                       <span>
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
-                         </svg>
+                        <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
                       </span>
-                      <span className="ml-2 font-medium">Add Delivery</span>
+                      <span className="ml-2 font-medium">Space DeliveryMan</span>
                     </Link>
                   </li>
               </ul>
@@ -84,7 +84,7 @@ const DashbordAdmin = () => {
 <div className="container px-5 py-24 mx-auto">
   <div className="flex flex-col text-center w-full mb-20">
 
-    <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them man bun deep jianbing selfies heirloom prism food truck ugh squid celiac humblebrag.</p>
+    <p className="lg:w-2/3 mx-auto leading-relaxed text-gray-300">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them man bun deep jianbing selfies heirloom prism food truck ugh squid celiac humblebrag.</p>
   </div>
   <div className="flex flex-wrap -m-4 text-center">
    
@@ -95,7 +95,7 @@ const DashbordAdmin = () => {
           <circle cx={9} cy={7} r={4} />
           <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75" />
         </svg>
-        <h2 className="title-font font-medium text-3xl text-gray-900"></h2>
+        <h2 className="title-font font-medium text-3xl text-white"></h2>
         <p className="leading-relaxed">Orders</p>
       </div>
     </div>
@@ -106,8 +106,8 @@ const DashbordAdmin = () => {
           <circle cx={9} cy={7} r={4} />
           <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75" />
         </svg>
-        <h2 className="title-font font-medium text-3xl text-gray-900"></h2>
-        <p className="leading-relaxed">Delivery</p>
+        <h2 className="title-font font-medium text-3xl text-white"></h2>
+        <p className="leading-relaxed ">DeliveryMan</p>
       </div>
     </div>
   

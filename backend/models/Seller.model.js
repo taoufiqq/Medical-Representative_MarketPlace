@@ -28,11 +28,7 @@ const Seller = new Schema(
             required: true,
             trim: true,
         },
-        document: {
-            type : String,
-            required : true,
-            trim : true,
-        },
+
         status : {
             type : String,
             required : true,

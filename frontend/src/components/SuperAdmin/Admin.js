@@ -7,7 +7,7 @@ const Admin = () => {
  
   const history = useHistory();
   const [admins, setAdmins] = useState();
-  const [superAdmin, setSuperAdmin] = useState();
+  const SuperAdmin=localStorage.getItem('SuperAdmin');
 
 // get all admin and show it in table
 
@@ -25,29 +25,17 @@ const Admin = () => {
     })
 
 
-// get all Super admin 
-
-useEffect(()=>{
-
-  axios.get(`http://localhost:3030/superAdmin/getAllsuperAdmins`)
-    .then(function (response) {
-        
-      setSuperAdmin(response.data)
-    
-    }).catch(function (err) {
-      console.log(err);
-  });
-  
-  })
   // delete Admin 
   const deleteAdmin = (id)=>{
+    var msgConfirmation = window.confirm("Are You Sure Yo want to delete this Product ?");
+    if (msgConfirmation) {
     axios.delete(`http://localhost:3030/superAdmin/deleteAdmin/${id}`)
     .then(function (response) {
       console.log('item was deleted Succesfully ... ');
     
     })
     
-  
+    }
   }
     const getIdAdmin = (id)=>{
       localStorage.setItem('idAdmin',id);
@@ -70,15 +58,15 @@ const logOut =()=>{
         <div className="flex h-screen antialiased text-black bg-gradient-to-r from-purple-300 to-blue-500">
                 {/* <img className="w-12 h-12 p-px -mt-8 rounded-full neumorphism-shadow" src=""/> */}
           <aside className="flex-shrink-0 p-4 w-72 h-full">
-            <div className="flex flex-col h-full pt-12 pb-4 rounded-lg neumorphism-shadow">
+            <div className="flex flex-col h-full pt-12 pb-4 rounded-lg neumorphism-shadow bg-white">
               {/* Sidebar header */}
-              { superAdmin && superAdmin.map(item =>(
+    
               <div className="flex flex-col items-center justify-center flex-shrink-0 px-4 py-2 mx-4 rounded-lg neumorphism-shadow bg-blue-300">
               
-                <span href="" target="_blank" className="mt-3 px-4 py-1 rounded-md text-xl font-semibold tracking-wider text-gray-600  focus:outline-none">Welcom {item.firstName +" "+ item.lastName}</span>
+                <span href="" target="_blank" className="mt-3 px-4 py-1 rounded-md text-xl font-semibold tracking-wider text-gray-600  focus:outline-none">{SuperAdmin}</span>
                 <span href="" target="_blank" className="mt-3 px-4 py-1 rounded-md text-xl font-semibold tracking-wider text-gray-600  focus:outline-none">Super Admin</span>
               </div>
-              ))}
+
               {/* Sidebar links */}
               <nav className="flex-1 max-h-full p-4 mt-6 overflow-y-hidden">
                 <ul className="max-h-full p-2 space-y-1 overflow-y-auto divide-y divide-blue-300 neumorphism-shadow">

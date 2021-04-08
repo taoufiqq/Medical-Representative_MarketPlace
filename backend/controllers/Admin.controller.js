@@ -1,5 +1,6 @@
 const Admin = require('../models/Admin.model');
-const Delivery = require('../models/Delivery.model')
+const DeliveryMan = require('../models/DeliveryMan.model')
+const Order = require('../models/Order.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -56,8 +57,8 @@ const loginAdmin = (req, res) => {
       }).catch((err) => res.status(400).json("Error :" + err));
   }
  //______________________get all Delivery_____________________ 
-exports.DelivryList = (req, res) => {
-  Delivery.find()
+const getAllDelivery = (req, res) => {
+  DeliveryMan.find()
     .then(DeliveryInfos => {
       res.status(200).json(DeliveryInfos);
     }).catch(error => {
@@ -71,60 +72,47 @@ exports.DelivryList = (req, res) => {
 
 
 //-------------------------Add Delivery-----------------------------
-
 const addDelivery = (req, res) => {
-  const delivery = new Delivery({
-    fullName: req.body.fullName,
-    type: req.body.type,
- 
-  });
-  //Save
-  delivery.save().then(data => {
-    res.status(200).json(data);
-  }).catch(err => {
-    res.status(500).json({
-      message: "Fail!",
-      error: err.message
-    });
-  });
-};
 
-// ______________________get Delivery by id__________________
-const getDeliveryById = (req, res) => {
-  Delivery.findById(req.params.id)
-      .then(Delivery => {
-        res.status(200).json(Delivery);
-      }).catch(err => {
-          if(err.kind === 'ObjectId') {
-              return res.status(404).send({
-                  message: "Delivery not found with id " + req.params.id,
-                  error: err
-              });                
-          }
-          return res.status(500).send({
-              message: "Error retrieving Category with id " + req.params.id,
-              error: err
-          });
+
+      const fullName = req.body.fullName;
+      const telephone = req.body.telephone;
+      const type = "Standard";
+
+ 
+      const DeliveryPush = new DeliveryMan({
+          fullName,
+          telephone,
+          type,
+          
       });
-};
+      DeliveryPush
+      
+          .save()
+          .then(() => res.json("Delivery Man added successfully"))
+          .catch((err) => res.status(400).json("Error :" + err));
+
+}
+
 //________________________updating Delivery____________________
 const updateDelivery = (req, res) => {
   // Find Delivery By ID and update it
-  Delivery.updateOne({
+  DeliveryMan.updateOne({
       _id: req.params.id
     }, {
       fullName: req.body.fullName,
+      telephone:req.body.telephone,
       type: req.body.type,
  
     })
-    .then(() => res.status(201).json("Delivery updated successfully"))
+    .then(() => res.status(201).json("Delivery Man updated successfully"))
     .catch((err) => res.status(400).json("Error :" + err));
 };
 
 //___________________________delete Delivery______________________
 const deleteDelivery = (req, res) => {
   const {id} = req.params;
-  Delivery.findOneAndDelete({_id: id})
+  DeliveryMan.findOneAndDelete({_id: id})
       .then(Delivery => {
           if(!Delivery) {
             res.status(404).json({
@@ -140,8 +128,57 @@ const deleteDelivery = (req, res) => {
           });
       });
 };
+//________________________Get Product By Product____________________
+const getDeliveryById = (req, res) => {
+  DeliveryMan.findById(req.params.id)
+      .then(DeliveryMan => {
+        res.status(200).json(DeliveryMan);
+      }).catch(err => {
+          if(err.kind === 'ObjectId') {
+              return res.status(404).send({
+                  message: "DeliveryMan not found with id " + req.params.id,
+                  error: err
+              });                
+          }
+          return res.status(500).send({
+              message: "Error retrieving Category with id " + req.params.id,
+              error: err
+          });
+      });
+};
+ //------------------------- Validate Order ----------------------------- 
+const validateOrder = (req, res) => {
+    
+  Order.findByIdAndUpdate(
+                   {_id: req.params.id},
+                    {
+                      shipped : true
+                    }
+                  )
+  .then(() => res.status(201).json("Order updated successfully"))
+  .catch((err) => res.status(400).json("Error :" + err));
+};
+ //-------------------------get all orders-----------------------------  
+const getAllOrder = (req, res) => {
+  Order.find()
+  .then(OrderInfos => {
+        res.status(200).json(OrderInfos);
+      }).catch(error => {
+        console.log(error);
+        res.status(500).json({
+            message: "Error!",
+            error: error
+        });
+      });
+};
+ //-------------------------logout Admin and remove token-----------------------------   
+ const logout = (req, res) => {
+  const deconnect = res.clearCookie("token")
 
- 
+  res.json({
+      message: 'User is Signout !!'
+  })
+} 
   module.exports={
-    getAllAdmins,loginAdmin,addDelivery,getDeliveryById,updateDelivery,deleteDelivery
+    getAllAdmins,loginAdmin,addDelivery,getDeliveryById,updateDelivery,deleteDelivery,validateOrder,logout,getAllOrder,getAllDelivery
 };

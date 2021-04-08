@@ -1,29 +1,35 @@
 import React, {useEffect, useState} from 'react';
 import { Link,useHistory } from 'react-router-dom';
 import axios from 'axios';
+import toastr from 'toastr';
+import "toastr/build/toastr.css";
 
 const  ListProducts=()=> {
     const history = useHistory();
 
-
+    const nameSeller=localStorage.getItem('IdSeller');
     const [listProducts, setListProducts] = useState();
+    const [listProductsLength, setlistProductsLength] = useState();
 
-    // get all admin and show it in table
+    // get all Product and show it in table
     
+    const IdSeller=localStorage.getItem('IdSeller');
       useEffect(()=>{
     
-        axios.get(`http://localhost:3030/Seller/getAllProduct`)
+        axios.get(`http://localhost:3030/Seller/getProductBySellername/${IdSeller}`)
           .then(function (response) {
               
             setListProducts(response.data)
-          
+            setlistProductsLength(response.data.length)
           }).catch(function (err) {
             console.log(err);
         });
         
-        })
+        },[IdSeller])
+        
+  // delete Product 
 
-  // delete Admin 
+  // delete Product 
   const deleteProduct = (id)=>{
     var msgConfirmation = window.confirm("Are You Sure Yo want to delete this Product ?");
     if (msgConfirmation) {   
@@ -37,29 +43,39 @@ const  ListProducts=()=> {
   
   }
 }
-//   const getIdProduct = (id)=>{
-//     localStorage.setItem('idProduct',id);
-//     // history.push('/');
+  const getIdProduct = (id)=>{
+    localStorage.setItem('idProduct',id);
+    history.push('/editProduct');
   
-//   }
+  }
     
     const logOut =()=>{
 
         localStorage.removeItem('token')
            history.push('/loginSeller');
         }
+
+        const checklength = ()=>{
+          if(listProductsLength > 10){
+            toastr.error('You have increase Your Limets Buy a pack !!')
+            history.push('/buyPack');
+  
+          }
+        }
+    
+
     return (
         <div>
         <style dangerouslySetInnerHTML={{__html: "\n      /* Add this shadow in tailwind.config.js */\n      .neumorphism-shadow {\n        box-shadow: -4px -4px 10px rgb(255, 255, 255), 4px 4px 10px rgba(0, 0, 0, 0.219);\n      }\n      /* Rotate chevron in collapsing */\n      [data-bs-toggle='collapse'][aria-expanded='true'] span:nth-child(3) svg {\n        transform: rotate(-90deg);\n      }\n\n      /* For bootstrap collapse plugin */\n      .fade {\n        transition: opacity 0.15s linear;\n      }\n      .fade:not(.show) {\n        opacity: 0;\n      }\n      .collapse:not(.show) {\n        display: none;\n      }\n      .collapsing {\n        height: 0;\n        overflow: hidden;\n        transition: height 0.35s ease;\n      }\n      @media (prefers-reduced-motion: reduce) {\n        .collapsing {\n          transition: none;\n        }\n        .fade {\n          transition: none;\n        }\n      }\n      /* fixed github link. this stuff also should be applied throw config file  */\n      .github-link:hover {\n        box-shadow: inset -4px -4px 10px rgb(255, 255, 255), inset 4px 4px 10px rgba(0, 0, 0, 0.219);\n      }\n      .github-link:hover > svg,\n      .github-link:focus > svg {\n        transform: scale(.95)\n      }\n\n/* TODO: CHANGE SCROLLBAR STYLE */\n    " }} />
         <div className="flex h-screen antialiased text-black bg-gradient-to-r from-purple-300 to-blue-500">
                 {/* <img className="w-12 h-12 p-px -mt-8 rounded-full neumorphism-shadow" src=""/> */}
-                <aside className="flex-shrink-0 p-4 w-72 h-full bg-white">
-            <div className="flex flex-col h-full pt-12 pb-4 rounded-lg neumorphism-shadow">
+                <aside className="flex-shrink-0 p-4 w-72 h-full ">
+            <div className="flex flex-col h-full pt-12 pb-4 rounded-lg neumorphism-shadow bg-white">
               {/* Sidebar header */}
   
               <div className="flex flex-col items-center justify-center flex-shrink-0 px-4 py-2 mx-4 rounded-lg neumorphism-shadow bg-blue-300">
               
-                <span href="" target="_blank" className="mt-3 px-4 py-1 rounded-md text-xl font-semibold tracking-wider text-gray-600  focus:outline-none">Seller</span>
+                <span href="" target="_blank" className="mt-3 px-4 py-1 rounded-md text-xl font-semibold tracking-wider text-gray-600  focus:outline-none">{nameSeller}</span>
               </div>
        
               {/* Sidebar links */}
@@ -81,7 +97,7 @@ const  ListProducts=()=> {
              
                   </li>
                   <li>
-                    <Link className="flex items-center px-4 py-2 text-gray-600 transition-transform transform rounded-md hover:translate-x-1 focus:ring focus:outline-none">
+                    <Link to='buyPack' className="flex items-center px-4 py-2 text-gray-600 transition-transform transform rounded-md hover:translate-x-1 focus:ring focus:outline-none">
                       <span>
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
@@ -118,10 +134,7 @@ const  ListProducts=()=> {
   <div className=" flex items-center justify-center font-sans " style={{marginTop:70}}>
 
     <div className="w-full" >
-    <Link to='/addProduct' class="bg-blue-300 hover:bg-green-100 text-black font-bold py-2 px-4 rounded-md">
-      {/* <svg xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
-     </svg> */}
+    <Link onClick={checklength} to='/addProduct' class="bg-blue-300 hover:bg-green-100 text-black font-bold py-2 px-4 rounded-md">
         Add Product
     </Link>
       <div className="bg-white shadow-md rounded my-6">
@@ -174,7 +187,7 @@ const  ListProducts=()=> {
               <td className="py-3 px-6 text-center">
 
                 <div className="flex item-center justify-center">               
-                  <Link  className="w-4 mr-2 transform hover:text-yellow-500 hover:scale-110 ">
+                  <Link onClick={()=>getIdProduct(item._id)} className="w-4 mr-2 transform hover:text-yellow-500 hover:scale-110 ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>

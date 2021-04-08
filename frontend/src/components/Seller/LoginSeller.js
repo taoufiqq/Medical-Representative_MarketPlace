@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import {useHistory } from "react-router-dom";
+import {Link,useHistory } from "react-router-dom";
 import axios from 'axios';
 import toastr from 'toastr';
 import "toastr/build/toastr.css";
+
 
 const LoginSeller=()=> {
 
@@ -21,8 +22,7 @@ const LoginSeller=()=> {
 	axios.post(`http://localhost:3030/Seller/login`,Seller)
 		.then(res => {
 
-
-            if(!res.data.message){ 
+      if(!res.data.message){ 
        let status= res.data.status;
 
        localStorage.setItem("status", status);
@@ -33,6 +33,7 @@ const LoginSeller=()=> {
       }else{
         let token= res.data.token;
         localStorage.setItem("token", token);
+        localStorage.setItem("IdSeller", login);
         history.push('/sellerDashboard');
         toastr.info('User is authenticated SuccessFully')
       }
@@ -51,36 +52,44 @@ const LoginSeller=()=> {
 
 
     return (
-<div className="min-h-screen bg-gradient-to-r from-green-400 to-blue-500  flex flex-col justify-center sm:py-12">
+ <div>
 
-  <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
-      
-    <h1 className="font-bold text-center text-2xl mb-5">Space Seller </h1> 
-
-    <form className="form-horizontal w-3/4 mx-auto"  onSubmit={handleSubmit}>
-    <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
-      <div className="px-5 py-7">
-        <label className="font-semibold text-sm text-gray-600 pb-1 block">Login</label>
-        <input type="text" className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" 
-          required 
-          value={login} 
-          onChange={e => setLogin(e.target.value)}/>
-        <label className="font-semibold text-sm text-gray-600 pb-1 block">Password</label>
-        <input type="text" className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-         value={password} 
-         onChange={e => setPassword(e.target.value)} />
-        <button type="submit" className="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
-          <span className="inline-block mr-2">Login</span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 inline-block">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </button>
+  <div className="h-screen font-sans login bg-cover">
+    <div className="container mx-auto h-full flex flex-1 justify-center items-center">
+      <div className="w-full max-w-lg">
+        <div className="leading-loose">
+          <form className="max-w-sm m-4 p-10 bg-white bg-opacity-25 rounded shadow-xl"  onSubmit={handleSubmit}>
+            <p className="text-black font-medium text-center text-lg font-bold">Seller Login</p>
+            <div className="mt-10">
+          
+              <input className="w-full px-5 py-1 text-black bg-gray-300 rounded focus:outline-none focus:bg-white" type="text"  placeholder="enter login"
+               required 
+               value={login} 
+               onChange={e => setLogin(e.target.value)}/>
+            </div>
+            <div className="mt-10">
+           
+              <input className="w-full px-5 py-1 text-black bg-gray-300 rounded focus:outline-none focus:bg-white" type="password" id="password" placeholder="enter password" arial-label="password"
+               required 
+               value={password} 
+               onChange={e => setPassword(e.target.value)}/>
+            </div>
+            <div className="mt-7 items-center flex justify-between">
+              <button className="px-8 py-1 text-white font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded" type="submit">login</button>
+            </div>
+            <div className="text-center">
+              <Link to='/signIn' className="inline-block right-0 align-baseline font-light text-sm text-500 hover:text-red-400">
+                don't have an account ?
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
-
     </div>
-    </form>
   </div>
+  <style dangerouslySetInnerHTML={{__html: "\n  .login{\n  /*\n   */\n  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-2.jpg');\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n" }} />
 </div>
+
 
     )
 }

@@ -7,8 +7,12 @@ router.get('/admin', AdminController.getAllAdmins)
 router.post('/login', AdminController.loginAdmin);
 router.post('/addDelivery', AdminController.addDelivery);
 router.get('/getDeliveryById/:id', AdminController.getDeliveryById);
+router.get('/getAllDelivery', AdminController.getAllDelivery)
 router.put('/updateDelivery/:id', AdminController.updateDelivery);
-router.delete('/deleteDelivery', AdminController.deleteDelivery);
+router.delete('/deleteDelivery/:id', AdminController.deleteDelivery);
+router.put('/validateOrder/:id', AdminController.validateOrder);
+router.get('/getAllOrder', AdminController.getAllOrder);
+router.get('/logout', AdminController.logout);
 
 
 

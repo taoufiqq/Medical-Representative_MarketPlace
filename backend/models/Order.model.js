@@ -9,7 +9,7 @@ const Order = new Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
     },
-    address:{
+    ShippingAddress:{
 
         type: String,
         required: true,

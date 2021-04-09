@@ -49,15 +49,14 @@ const AdminRoutes = require("./routes/Admin.router");
 const SellerRoutes = require("./routes/Seller.router");
 const CustomerRoutes = require("./routes/Customer.router");
 const ProductRoutes = require("./routes/Product.router");
+const ChekoutRoutes = require("./routes/Checkout.router")
 
 app.use('/superAdmin',SuperAdminRoutes);
 app.use('/Admin',AdminRoutes);
 app.use('/Seller',SellerRoutes);
 app.use('/Customer',CustomerRoutes);
 app.use('/Product',ProductRoutes);
-
-
-
+app.use('/Checkout', ChekoutRoutes);
 
 
 

@@ -85,7 +85,7 @@ function Routes () {
             <Route path="/productByCategory/:category" exact component={SearchProductByCategory} />
             <Route path="/compte" exact component={Compte} />
             <Route path="/choiceLogin" exact component={ChoiceLogin} />           
-            <Route  path="/detailsProduct" exact component={DetailsProduct} />
+            <PrivateRouteCustomer  path="/detailsProduct" exact component={DetailsProduct} />
 
     {/* Routes Customer  */}
 

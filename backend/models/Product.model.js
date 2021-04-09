@@ -49,6 +49,14 @@ const Product = new Schema(
             type : String,
             required : true,
             trim : true,
+        },
+        id_seller: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Seller'
+        },
+        selled: {
+            type: Boolean,
+            default: false,
         }
     }
 );

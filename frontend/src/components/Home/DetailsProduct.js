@@ -3,79 +3,81 @@ import { Link,useHistory } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from '../parts/NavBar';
 import Footer from '../parts/Footer';
+import StripeCheckout from "react-stripe-checkout";
+import toastr from 'toastr';
+import "toastr/build/toastr.css";
+
 
 const DetailsProduct=()=> {
 
     const history = useHistory();
-    const [product, setProduct] = useState();
-    const [price, setprice] = useState();
+    const [product, setProduct] = useState("");
     const idPdts=localStorage.getItem('idProduct');
 
 
   
-
-
-
-
   // get all admin and show it in table
   
-  useEffect(()=>{
-  
+  useEffect(()=>{  
     axios.get(`http://localhost:3030/Seller/getProductById/${idPdts}`)
-      .then(function (response) {
-          
+      .then(function (response) {        
         setProduct(response.data)
-        setprice(response.data.price)
         console.log(product);
       
       }).catch(function (err) {
         console.log(err);
-    });
-    
-    },[idPdts])
+    });    
+},[idPdts])
 
 
 // -------------------Parite Exchange currency-------------------
 
     const [ToCurrency, setToCurrency] = useState('MAD');
 
-
     let currency = ToCurrency && ToCurrency;
 
     const [exchangeRate, setExchangeRate] = useState();
 
     useEffect(async()=>{
-
-
       fetch('http://data.fixer.io/api/latest?access_key=afe4bd8abcfd1a927150d247ad43ac84')
       .then(currencyRes => currencyRes.json())
-      .then(data => {
-      
-
-        setExchangeRate(data.rates[currency]);
-
-        
-        console.log(data.rates[currency]);
-        
+      .then(data => {   
+        setExchangeRate(data.rates[currency]);        
+        console.log(data.rates[currency]);        
       });
     
       axios.get(`http://localhost:3030/Seller/getProductById/${idPdts}`)
-      .then(function (response) {
-          
+      .then(function (response) {        
         setProduct(response.data)
         console.log(product);
       
       }).catch(function (err) {
         console.log(err);
+    });   
+  },[currency])
+// ------------------- End Parite Exchange currency-------------------
+
+
+    function handleToken(token) {
+      axios.post(`http://localhost:3030/Checkout/checkout`,{token,product})
+      .then(function (response) {
+        const { status } = response.data;
+        console.log("Response:", response.data);
+
+        if (status === "success") {
+          toastr.info('Success! Check email for details', {
+            positionClass: "toast-top-left",
+        })
+        } else {   
+          toastr.warning('Something went wrong', {
+            positionClass: "toast-top-left",
+        })
+        }
+      }).catch(function (err) {
+        console.log(err);
     });
-    
-    
-      },[currency])
-
-
-  
-
-    return (
+  }
+  return (
       
         <section className="text-gray-600 body-font">
           <NavBar/>
@@ -104,8 +106,15 @@ const DetailsProduct=()=> {
 
       <span className="title-font font-medium text-2xl text-gray-900">{product && (product.price * exchangeRate).toFixed(0) } {currency}</span>
    
-        <button className="ml-6 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Buy now</button>
-     
+        <StripeCheckout className="flex ml-auto text-white  bg-blue-500 hover:bg-blue-700 border-0 py-2 px-6 focus:outline-none  rounded"
+                        stripeKey="pk_test_51Ie2vaGvRz5qPQW3UfNV2WP7Ta9g9kRSGF2PGeORp6Y9L1NUOMJFiJgpid7yoPsphADwG9iJJfCtH7PfTWPNafZz00tbA2ntZZ"
+                        titel={product && product.titel}
+                        token={handleToken}
+                        billingAddress
+                        shippingAddress
+                        amount={product && product.price * 100}
+                    />
+                    
       </div>
     </div>
   </div>

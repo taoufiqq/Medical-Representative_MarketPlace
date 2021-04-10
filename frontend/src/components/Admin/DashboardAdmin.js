@@ -8,6 +8,40 @@ const DashbordAdmin = () => {
 
     const nameAdmin=localStorage.getItem('IdAdmin');
 
+    const [ordersLength, setOrdersLength] = useState();
+    const [delivery, setDelivery] = useState();
+   
+
+
+// get all Delivery and show it in table
+
+
+useEffect(()=>{
+
+  axios.get(`http://localhost:3030/Admin/getAllDelivery`)
+    .then(function (response) {
+        
+      setDelivery(response.data.length)
+    }).catch(function (err) {
+      console.log(err);
+  });
+  
+  })
+  // get all Orders Man and show it in table
+
+
+useEffect(()=>{
+
+  axios.get(`http://localhost:3030/Admin/getAllOrder`)
+    .then(function (response) {
+        
+      setOrdersLength(response.data.length)
+    }).catch(function (err) {
+      console.log(err);
+  });
+  
+  })
+
     const logOut =()=>{
 
         localStorage.removeItem('token')
@@ -95,7 +129,7 @@ const DashbordAdmin = () => {
           <circle cx={9} cy={7} r={4} />
           <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75" />
         </svg>
-        <h2 className="title-font font-medium text-3xl text-white"></h2>
+        <h2 className="title-font font-medium text-3xl text-black">{ordersLength}</h2>
         <p className="leading-relaxed">Orders</p>
       </div>
     </div>
@@ -106,7 +140,7 @@ const DashbordAdmin = () => {
           <circle cx={9} cy={7} r={4} />
           <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75" />
         </svg>
-        <h2 className="title-font font-medium text-3xl text-white"></h2>
+        <h2 className="title-font font-medium text-3xl text-black">{delivery}</h2>
         <p className="leading-relaxed ">DeliveryMan</p>
       </div>
     </div>

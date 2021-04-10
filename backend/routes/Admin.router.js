@@ -12,6 +12,8 @@ router.put('/updateDelivery/:id', AdminController.updateDelivery);
 router.delete('/deleteDelivery/:id', AdminController.deleteDelivery);
 router.put('/validateOrder/:id', AdminController.validateOrder);
 router.get('/getAllOrder', AdminController.getAllOrder);
+router.get('/getOrderById/:id',AdminController.getOrderById);
+router.delete('/deleteOrder/:id', AdminController.deleteOrder);
 router.get('/logout', AdminController.logout);
 
 

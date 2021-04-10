@@ -34,8 +34,10 @@ const LoginSeller=()=> {
         let token= res.data.token;
         localStorage.setItem("token", token);
         localStorage.setItem("IdSeller", login);
+        // console.log(res.data.id);
+        localStorage.setItem("seller",res.data.id);
         history.push('/sellerDashboard');
-        toastr.info('User is authenticated SuccessFully')
+        toastr.success('authenticated SuccessFully')
       }
 
 

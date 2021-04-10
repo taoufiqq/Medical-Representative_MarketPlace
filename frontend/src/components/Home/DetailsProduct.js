@@ -65,7 +65,7 @@ const DetailsProduct=()=> {
         console.log("Response:", response.data);
 
         if (status === "success") {
-          toastr.info('Success! Check email for details', {
+          toastr.success('Success! Check email for details', {
             positionClass: "toast-top-left",
         })
         } else {   

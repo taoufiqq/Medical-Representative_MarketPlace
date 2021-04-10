@@ -3,7 +3,7 @@ const DeliveryMan = require('../models/DeliveryMan.model')
 const Order = require('../models/Order.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
+const { inputValidationSchema  } = require("./XssValidation");
 
 const getAllAdmins = (req, res) => {
     Admin.find()
@@ -21,6 +21,22 @@ const getAllAdmins = (req, res) => {
 //-------------------------login Admin-----------------------------
 
 const loginAdmin = (req, res) => {
+  
+  let error = [];
+
+        
+  const { err } = inputValidationSchema.validate(req.body)
+  if (err) {
+
+          
+
+          error.push(err.details[0].message);
+          return res.json({
+
+                  error : error
+          }) 
+
+  };
 
     let login = req.body.login;
     let password = req.body.password;
@@ -128,7 +144,7 @@ const deleteDelivery = (req, res) => {
           });
       });
 };
-//________________________Get Product By Product____________________
+//________________________Get DeliveryMan By id_______________________________
 const getDeliveryById = (req, res) => {
   DeliveryMan.findById(req.params.id)
       .then(DeliveryMan => {
@@ -171,6 +187,32 @@ const getAllOrder = (req, res) => {
         });
       });
 };
+      // ______________________get orders by id__________________
+      const getOrderById = (req, res) => {
+        Order.findById(req.params.id)
+                  .then((order) => res.json(order))
+                  .catch((err) => res.status(400).json("Error :" + err));
+      };
+      
+ //___________________________delete Order ______________________
+const deleteOrder= (req, res) => {
+  const {id} = req.params;
+  Order.findOneAndDelete({_id: id})
+      .then(Delivery => {
+          if(!Delivery) {
+            res.status(404).json({
+              message: "Does Not exist a Order with id = ",
+              error: "404",
+            });
+          }
+          res.status(200).json({});
+      }).catch(err => {
+          return res.status(500).send({
+            message: "Error -> Can NOT delete a Order with id = ",
+            error: err.message
+          });
+      });
+};     
  //-------------------------logout Admin and remove token-----------------------------   
  const logout = (req, res) => {
   const deconnect = res.clearCookie("token")
@@ -180,5 +222,5 @@ const getAllOrder = (req, res) => {
   })
 } 
   module.exports={
-    getAllAdmins,loginAdmin,addDelivery,getDeliveryById,updateDelivery,deleteDelivery,validateOrder,logout,getAllOrder,getAllDelivery
+    getAllAdmins,loginAdmin,addDelivery,getDeliveryById,updateDelivery,deleteDelivery,validateOrder,getAllOrder,getAllDelivery,getOrderById,deleteOrder,logout
 };

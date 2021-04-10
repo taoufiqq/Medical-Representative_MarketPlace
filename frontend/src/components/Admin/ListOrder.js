@@ -1,19 +1,81 @@
 import React, {useEffect, useState} from 'react';
 import { Link,useHistory } from 'react-router-dom';
 import axios from 'axios';
+import toastr from 'toastr';
+import "toastr/build/toastr.css";
 
 const ListOrder = () => {
 
     const history = useHistory();
 
     const nameAdmin=localStorage.getItem('IdAdmin');
+    const [orders, setOrders] = useState();
+    const [ordersLength, setOrdersLength] = useState();
 
+    // const idOrder=localStorage.getItem('idOrder');
+
+
+// get all Orders and show it in table
+
+
+useEffect(()=>{
+
+  axios.get(`http://localhost:3030/Admin/getAllOrder`)
+    .then(function (response) {
+        
+      setOrders(response.data)
+      setOrdersLength(response.data.length)
+    }).catch(function (err) {
+      console.log(err);
+  });
+  
+  })
+
+
+//------------------ validate Order --------------------------
+
+  const validateOrder = (id) => {
+
+    
+    axios.put(`http://localhost:3030/Admin/validateOrder/${id}`)
+    .then(res => {
+    console.log(res);
+
+    toastr.success(`Order Validated Successfully,${new Date()}`, {
+        positionClass: "toast-top-left",
+        
+    })
+    
+    })
+
+}
+// ----------------------delete order-----------------------
+
+
+const deleteOrder = (id)=>{
+  var msgConfirmation = window.confirm("Are You Sure Yo want to delete this Order ?");
+  if (msgConfirmation) {   
+  axios.delete(`http://localhost:3030/Admin/deleteOrder/${id}`)
+  .then(function (response) {
+      window.location.reload();
+      toastr.success("Order deleted Successfully", {
+        positionClass: "toast-top-left",
+        
+    })
+  
+  })
+  
+
+}
+}
     const logOut =()=>{
 
         localStorage.removeItem('token')
            history.push('/loginAdmin');
         }
-      
+
+
+
     return (
     
       <div>
@@ -81,7 +143,69 @@ const ListOrder = () => {
         </aside>
         {/* Start section Statstique  */}
 
+        <div className="overflow-x-auto" style={{width:1200}}>
 
+<div className=" flex items-center justify-center font-sans " style={{marginTop:150,marginLeft:250}}>
+
+  <div className="w-full">
+
+    <div className="bg-white shadow-md rounded my-6">
+      <table className="min-w-max w-full table-auto">
+        <thead>
+          <tr className="bg-gray-200 text-gray-600  text-sm leading-normal">
+          <th className="py-3 px-6 text-left">Id Product</th>       
+            <th className="py-3 px-6 text-center">Price</th>
+            <th className="py-3 px-6 text-left">ShippingAddress</th>   
+            <th className="py-3 px-6 text-center">Actions</th>
+          </tr>
+        </thead>
+ { orders && orders.map(item =>(
+        <tbody className="text-gray-600 text-sm font-light">
+
+
+          <tr className="border-b border-gray-200 hover:bg-gray-100">
+
+          <td className="py-3 px-6 text-left whitespace-nowrap">
+             {item.idProduct}
+            </td>
+         
+            <td className="py-3 px-6 text-left">
+            {item.price}
+            </td>
+            <td className="py-3 px-6 text-left whitespace-nowrap">
+             {item.ShippingAddress}
+            </td>
+
+
+  
+            <td className="py-3 px-6 text-center">
+
+              <div className="flex item-center justify-center">               
+                <Link onClick={()=>validateOrder(item._id)} className="w-4 mr-2 transform hover:text-yellow-500 hover:scale-110">
+                  {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  </svg> */}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                </Link>
+                <Link onClick={()=>deleteOrder(item._id)}  className="w-4 mr-2 transform hover:text-red-500 hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </Link>
+              </div>
+
+            </td>
+
+          </tr>
+        </tbody>
+       ))} 
+      </table>
+    </div>
+  </div>
+</div>
+</div>
 
         
         </div>

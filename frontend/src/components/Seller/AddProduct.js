@@ -18,7 +18,7 @@ const  AddProduct = () => {
     const [status, setStatus] = useState("");
 
 
-        
+    const id=localStorage.getItem('seller');     
     const IdSeller=localStorage.getItem('IdSeller');
 //---------add Product------------- 
 
@@ -29,7 +29,7 @@ const  AddProduct = () => {
 
   
 
-    const Product = {titel,description,price,productImg,category,quantity, idSeller:IdSeller,status};
+    const Product = {titel,description,price,productImg,category,quantity, idSeller:IdSeller,status,id};
 
 	axios.post(`http://localhost:3030/Seller/addProduct`,Product)
           
@@ -43,7 +43,16 @@ const  AddProduct = () => {
 		 
 		})
 	}
-   
+  // const [listProductsLength, setlistProductsLength] = useState();
+
+  // const checklength = ()=>{
+  //   if(listProductsLength > 9){
+  //     toastr.error('You have increase Your Limets Buy a pack !!')
+  //     history.push('/buyPack');
+
+  //   }
+  // }
+
 
 return (
 <div className="font-sans">
@@ -97,6 +106,7 @@ return (
           <div className="mt-7">
             <button type="submit" className="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
              Add Product
+            
             </button>
           </div>
        

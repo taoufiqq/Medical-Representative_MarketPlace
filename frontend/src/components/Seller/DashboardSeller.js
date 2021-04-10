@@ -21,7 +21,7 @@ useEffect(()=>{
       console.log(err);
   });
   
-  })
+  },[])
 
 
 const logOut =()=>{

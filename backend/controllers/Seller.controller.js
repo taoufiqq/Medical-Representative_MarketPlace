@@ -4,9 +4,25 @@ const bcrypt = require('bcrypt');
 const Seller = require('../models/Seller.model');
 const Product = require('../models/Product.model');
 const date = new Date();
-
+const { inputValidationSchema  } = require("./XssValidation");
 const addSeller = (req, res) => {
-    //10==saltRounds
+
+  let error = [];
+
+        
+  const { err } = inputValidationSchema.validate(req.body)
+  if (err) {
+
+          
+
+          error.push(err.details[0].message);
+          return res.json({
+
+                  error : error
+          }) 
+
+  };
+
     bcrypt.hash(req.body.password, 10, function (err, hashPassword) {
         if (err) {
             res.json({
@@ -18,7 +34,6 @@ const addSeller = (req, res) => {
         const email = req.body.email;
         const login = req.body.login;
         const password = hashPassword;
-     
         const status = "InActive";
         const type = "Starter";
         // const docummant = {
@@ -46,6 +61,22 @@ const addSeller = (req, res) => {
 //-------------------------login Seller-----------------------------
 
 const loginSeller = (req, res) => {
+
+  let error = [];
+
+        
+  const { err } = inputValidationSchema.validate(req.body)
+  if (err) {
+
+          
+
+          error.push(err.details[0].message);
+          return res.json({
+
+                  error : error
+          }) 
+
+  };
 
     let login = req.body.login;
     let password = req.body.password;
@@ -87,7 +118,8 @@ const loginSeller = (req, res) => {
               }, 'tokenkey', (err, token) => {
                 res.cookie("token", token)
                 res.json({
-                  token: token
+                  token: token,
+                  id:Seller._id
                 })
               
             })

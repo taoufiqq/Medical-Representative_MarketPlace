@@ -5,8 +5,26 @@ const jwt_decode = require('jwt-decode');
 
 const Customer = require('../models/Customer.model');
 
+const { inputValidationSchema  } = require("./XssValidation");
+
 //------------------------Client authentication---------------------
 const addCustomer = async (req, res) => {
+
+  let error = [];
+
+        
+  const { err } = inputValidationSchema.validate(req.body)
+  if (err) {
+
+          
+
+          error.push(err.details[0].message);
+          return res.json({
+
+                  error : error
+          }) 
+
+  };
 
     bcrypt.hash(req.body.password, 10, function (err, hashPassword) {
         if (err) {
@@ -79,6 +97,21 @@ const activateCompteCustomer =  async(req, res) => {
   
 //-------------------------login Customer-----------------------------
 const loginCustomer = (req, res) => {
+  let error = [];
+
+        
+  const { err } = inputValidationSchema.validate(req.body)
+  if (err) {
+
+          
+
+          error.push(err.details[0].message);
+          return res.json({
+
+                  error : error
+          }) 
+
+  };
 
     let login = req.body.login;
     let password = req.body.password;

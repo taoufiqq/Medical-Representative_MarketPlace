@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const SuperAdmin = require('../models/superAdmin.model');
 const Admin = require('../models/Admin.model');
 const Seller = require('../models/Seller.model');
-
+const { inputValidationSchema  } = require("./XssValidation");
 
 //______________________get all SuperAdmin__________________________ 
 const getAllSuperAdmins = (req, res) => {
@@ -22,6 +22,22 @@ const getAllSuperAdmins = (req, res) => {
 //_______________________ Super Admin authentication________________________
 
 const addSuperAdmin = (req, res) => {
+
+  let error = [];
+
+        
+  const { err } = inputValidationSchema.validate(req.body)
+  if (err) {
+
+          
+
+          error.push(err.details[0].message);
+          return res.json({
+
+                  error : error
+          }) 
+
+  };
        
         bcrypt.hash(req.body.password, 10, function(err, hashPassword) {
             if (err) {
@@ -50,6 +66,22 @@ const addSuperAdmin = (req, res) => {
       
       const loginSuperAdmin = (req, res) => {
       
+        let error = [];
+
+        
+        const { err } = inputValidationSchema.validate(req.body)
+        if (err) {
+      
+                
+      
+                error.push(err.details[0].message);
+                return res.json({
+      
+                        error : error
+                }) 
+      
+        };
+
         let login=req.body.login;
         let password=req.body.password;
       
@@ -93,6 +125,22 @@ const addSuperAdmin = (req, res) => {
 
 //__________________________add Admin____________________
 const addAdmin = (req, res) => {
+
+  let error = [];
+
+        
+  const { err } = inputValidationSchema.validate(req.body)
+  if (err) {
+
+          
+
+          error.push(err.details[0].message);
+          return res.json({
+
+                  error : error
+          }) 
+
+  };
         bcrypt.hash(req.body.password, 10, function(err, hashPassword) {
                 if (err) {
                   res.json({error : err})    

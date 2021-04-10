@@ -28,7 +28,7 @@ const  Login = () => {
        localStorage.setItem('SuperAdmin',login);
 			 history.push('/superAdmin');
 
-			 toastr.info('Super Admin authenticated SuccessFully', `Welcome ${superAdmin.login}`, {
+			 toastr.success('authenticated SuccessFully', `Welcome ${superAdmin.login}`, {
 				positionClass: "toast-top-left",
 			})
 

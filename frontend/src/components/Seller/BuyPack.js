@@ -3,11 +3,74 @@ import { Link,useHistory } from 'react-router-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 import "toastr/build/toastr.css";
+import StripeCheckout from "react-stripe-checkout";
 
 export default function BuyPack() {
 
     const history = useHistory();
     const nameSeller=localStorage.getItem('IdSeller');
+
+
+
+
+     async function handleTokenProAccount(token) {
+
+
+      let product = {
+          type : 'Pro',
+          price : 3000
+      }
+
+       await axios.post(`http://localhost:3030/BuyAccount/buyAccount`,{token,product})
+        .then(function (response) {
+          const { status } = response.data;
+          console.log("Response:", response.data);
+  
+          if (status === "success") {
+            toastr.success('Success! Check email for details', {
+              positionClass: "toast-top-left",
+          })
+          } else {   
+            toastr.warning('Something went wrong', {
+              positionClass: "toast-top-left",
+          })
+          }
+        }).catch(function (err) {
+          console.log(err);
+      });
+   
+
+
+    }
+     
+    async function handleTokenExpertAccount(token) {
+
+      let product = {
+          type : 'Expert',
+          price : 5000
+      }
+     
+
+      await axios.post(`http://localhost:3030/BuyAccount/buyAccount`,{token,product})
+        .then(function (response) {
+          const { status } = response.data;
+          console.log("Response:", response.data);
+  
+          if (status === "success") {
+            toastr.success('Success! Check email for details', {
+              positionClass: "toast-top-left",
+          })
+          } else {   
+            toastr.warning('Something went wrong', {
+              positionClass: "toast-top-left",
+          })
+          }
+        }).catch(function (err) {
+          console.log(err);
+      });
+  
+
+    }
 
 
     const logOut =()=>{
@@ -101,12 +164,20 @@ export default function BuyPack() {
           <svg xmlns="http://www.w3.org/2000/svg" class="h-80 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2 " d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
          </svg>
-          <button className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">Buy now
+          {/* <button className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">Buy now
             <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-auto" viewBox="0 0 24 24">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </button>
-         
+          */}
+          
+          <StripeCheckout className="flex items-center mt-auto text-white bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded"
+                                        stripeKey="pk_test_51IcsGEHRH7LB9NYW6q5Xed7pHznPT7shwEfb0NhkWdVIHB489oWS4E2iypkwCEeO8KOYLG5FEAro7SQToOlrCOga00Q09necQB"
+                                        name={'Pro Account'}
+                                        token={handleTokenProAccount}
+                                        amount={30 * 100}
+                                    />  
+
         </div>
       </div>
       <div className="p-4 xl:w-1/2 md:w-1/2 w-full">
@@ -123,11 +194,12 @@ export default function BuyPack() {
             <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z" />
         </svg>
         
-          <button className="flex items-center mt-auto text-white bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded">Buy now
-            <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-auto" viewBox="0 0 24 24">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </button>
+        <StripeCheckout className="flex items-center mt-auto text-white bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded"
+                                        stripeKey="pk_test_51IcsGEHRH7LB9NYW6q5Xed7pHznPT7shwEfb0NhkWdVIHB489oWS4E2iypkwCEeO8KOYLG5FEAro7SQToOlrCOga00Q09necQB"
+                                        name={'Expert Account'}
+                                        token={handleTokenExpertAccount}
+                                        amount={50 * 100}
+                                    /> 
      
         </div>
       </div>

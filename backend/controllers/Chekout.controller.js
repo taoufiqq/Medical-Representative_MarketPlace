@@ -79,12 +79,12 @@ const checkout = async (req,res)=>{
 
 
     
-        // let seller = await Seller.findById(idSeller);
+        let seller = await Seller.findById(idSeller);
 
-        // let newIncome = seller.income + price;
+        let newTotalGain = seller.totalGain + price;
 
 
-        // let updateIncome = await Seller.findByIdAndUpdate(idSeller,{income: newIncome});
+        let updateTotalGain= await Seller.findByIdAndUpdate(idSeller,{totalGain: newTotalGain});
 
 
 

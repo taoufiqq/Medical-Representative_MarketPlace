@@ -39,6 +39,15 @@ const Seller = new Schema(
             required : true,
             trim : true,
         },
+        totalGain : {
+            type: Number,
+            default: 0,
+          },
+          listedProduct: {
+            type: Number,
+            default: 0,
+          }
+      
     }
 );
 const sellerList = mongoose.model("Seller",Seller);

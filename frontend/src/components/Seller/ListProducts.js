@@ -14,6 +14,8 @@ const  ListProducts=()=> {
     // get all Product and show it in table
     
     const IdSeller=localStorage.getItem('IdSeller');
+
+    
       useEffect(()=>{
     
         axios.get(`http://localhost:3030/Seller/getProductBySellername/${IdSeller}`)
@@ -55,11 +57,14 @@ const  ListProducts=()=> {
            history.push('/loginSeller');
         }
 
-        const checklength = ()=>{
-          if(listProductsLength > 10){
-            toastr.error('You have increase Your Limets Buy a pack !!')
+  const checklength = ()=>{
+          if(listProductsLength > 9){
+            toastr.error('You have increase Your Limets Buy a pack !! If you want to seller more ,pls upgrade your acoount')
             history.push('/buyPack');
   
+          }
+          else{
+            history.push('/addProduct');
           }
         }
     
@@ -134,7 +139,7 @@ const  ListProducts=()=> {
   <div className=" flex items-center justify-center font-sans " style={{marginTop:70}}>
 
     <div className="w-full" >
-    <Link onClick={checklength} to='/addProduct' class="bg-blue-300 hover:bg-green-100 text-black font-bold py-2 px-4 rounded-md">
+    <Link onClick={checklength} class="bg-blue-300 hover:bg-green-100 text-black font-bold py-2 px-4 rounded-md">
         Add Product
     </Link>
       <div className="bg-white shadow-md rounded my-6">

@@ -20,6 +20,7 @@ import ListOrder from '../Admin/ListOrder';
 import DeliveryMan from '../Admin/DeliveryMan';
 import AddDeliveryMan from '../Admin/AddDeliveryMan';
 import EditDeliveryMan from '../Admin/EditDeliveryMan';
+
 // import Components Seller
 import DashboardSeller from '../Seller/DashboardSeller'
 import AddProduct from '../Seller/AddProduct'
@@ -39,6 +40,7 @@ import LoginCustomer from '../Customer/LoginCustomer'
 import ValidateAccount from '../Customer/ValidateAccount'
 import AcceuilCustomer from '../Customer/AcceuilCustomer'
 import SearchProductByCategory from '../Home/SearchProductByCategory';
+
 
 
 
@@ -68,6 +70,7 @@ function Routes () {
             <PrivateRoute  path="/deliveryMan" exact component={DeliveryMan} />
             <PrivateRoute  path="/addDeliveryMan" exact component={AddDeliveryMan} />
             <PrivateRoute  path="/editDeliveryMan" exact component={EditDeliveryMan} />
+
 
      {/* Routes Seller  */}
 

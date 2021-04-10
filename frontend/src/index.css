@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+  
+
+  .goog-te-banner-frame.skiptranslate {
+    display: none !important;
+  }
+  
+  body {
+    top: 0px !important;
+  }
+  
+  .goog-logo-link,
+  .goog-logo-link:link,
+  .goog-logo-link:visited,
+  .goog-logo-link:hover,
+  .goog-logo-link:active {
+    display: none;
+  }
+  
+  .goog-te-gadget .goog-te-combo {
+    border-radius: 2px;
+    color: rgb(5, 3, 3);
+    background: none;
+    outline: none;
+    /* border: 1px solid;
+    margin-left: -20%; */
+  }
+  
+  .goog-te-gadget .goog-te-combo option {
+    background-color: #fbfbfb;
+  }
